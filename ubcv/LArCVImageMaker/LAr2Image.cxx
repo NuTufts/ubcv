@@ -205,6 +205,7 @@ namespace supera {
 	column.resize(img.meta().rows() + 1, (float)(::larcv::kROIUnknown));
     }
 
+    int nlabeled = 0;
     for (auto const& sch : sch_v) {
       auto ch = sch.Channel();
       auto const& wid = ::supera::ChannelToWireID(ch);
@@ -234,17 +235,28 @@ namespace supera {
 	::larcv::ROIType_t roi_type =::larcv::kROIUnknown;
 	for (auto const& edep : tick_ides.second) {
 	  if (edep.energy < energy) continue;
-	  if (std::abs(edep.trackID) >= (int)(track2type_v.size())) continue;
+	  if (std::abs(edep.trackID) >= (int)(track2type_v.size())) {
+	    //std::cout << "Edep trackid " << std::abs(edep.trackID) << " is out of track2type_v map: " << track2type_v.size() << std::endl;
+	    continue;
+	  }
 	  auto temp_roi_type = track2type_v[std::abs(edep.trackID)];
-	  if (temp_roi_type ==::larcv::kROIUnknown) continue;
+	  if (temp_roi_type ==::larcv::kROIUnknown) {
+	    //LARCV_SDEBUG() << "Label from valid edep is ROIUnknown" << std::endl;
+	    //std::cout << "Label from valid edep is ROIUnknown" << std::endl;
+	    continue;
+	  }
 	  energy = edep.energy;
 	  roi_type = (::larcv::ROIType_t)temp_roi_type;
 	}
+	if ( roi_type!=::larcv::kROIUnknown )
+	  nlabeled++;
 	column[index] = roi_type;
       }
       // mem-copy column vector
       img.copy(0, col, column, img.meta().rows());
     }
+    //LARCV_SDEBUG() << "nlabeled=" << nlabeled << std::endl;
+    //std::cout << "nlabeled=" << nlabeled << std::endl;
     return img_v;
   }
 

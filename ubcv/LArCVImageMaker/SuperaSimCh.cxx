@@ -54,6 +54,10 @@ namespace larcv {
     }
 
     std::vector<larcv::ROIType_t> track2type_v;
+    
+    LARCV_DEBUG() << "Size of mctrack vector:  " << LArData<supera::LArMCTrack_t>().size()  << std::endl;
+    LARCV_DEBUG() << "Size of mcshower vector: " << LArData<supera::LArMCShower_t>().size() << std::endl;
+
     for(auto const& mctrack : LArData<supera::LArMCTrack_t>()) {
 
       if(_origin && ((unsigned short)(mctrack.Origin())) != _origin) continue;

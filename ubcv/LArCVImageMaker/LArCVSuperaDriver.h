@@ -64,13 +64,15 @@ namespace larcv {
     SuperaChStatus* SuperaChStatusPointer();
 
     void initialize();
-    bool process(size_t run, size_t subrun, size_t event);
+    bool process(size_t run, size_t subrun, size_t event, bool autosave_entry=true);
     void finalize();
 
     void SetCSV(std::string proc_name, std::string fname);
 
     inline std::vector<std::string> ProcessNames() const
     { return _driver.process_names(); }
+
+    ProcessDriver driver() { return _driver; };
 
   private:
 

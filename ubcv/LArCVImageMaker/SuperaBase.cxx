@@ -24,7 +24,7 @@ namespace larcv {
   
   void SuperaBase::configure(const PSet& cfg)
   {
-    cfg.get<int>("Verbosity");
+
     _time_offset  = cfg.get<int>("TimeOffset",2400);
     
     auto producer_wire     = cfg.get<std::string>("LArWireProducer",    "");

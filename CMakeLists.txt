@@ -104,8 +104,8 @@ find_package(ublarcvapp REQUIRED CONFIG)
 
 # --- Torch
 #set( Torch_DIR "${EXTERN_LIBDIR}/libtorch/share/cmake/Torch" )
-set( Torch_DIR "${UPS_PRODUCT_DIR}/libtorch/v1_0_1/Linux64bit+3.10-2.17_e17_prof_openblas_nonnpack/share/cmake/Torch" )
-find_package( Torch CONFIG )
+set( Torch_DIR "${UPS_PRODUCT_DIR}/libtorch/v1_0_1/Linux64bit+3.10-2.17-e17-prof/share/cmake/Torch" )
+find_package( Torch REQUIRED  CONFIG )
 
 # ADD SOURCE CODE SUBDIRECTORIES HERE
 add_subdirectory(ubcv)
